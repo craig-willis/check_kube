@@ -53,7 +53,7 @@ var nodesCmd = &cobra.Command{
 		config.Host = server
 		kubeClient, err := client.New(config)
 		if err != nil {
-			fmt.Printf("CRITICAL: %s\n", err)
+			fmt.Printf("2 check_kube-nodes CRITICAL - %s\n", err)
 			os.Exit(nagiosStatusUnknown)
 		}
 
@@ -64,7 +64,7 @@ var nodesCmd = &cobra.Command{
 			},
 		)
 		if err != nil {
-			fmt.Printf("CRITICAL: %s\n", err)
+			fmt.Printf("2 chek_kube-nodes CRITICAL - %s\n", err)
 			os.Exit(nagiosStatusUnknown)
 		}
 
@@ -84,11 +84,11 @@ var nodesCmd = &cobra.Command{
 		}
 
 		if statusCode != nagiosStatusOK {
-			fmt.Println(strings.Join(statusLine, "\n"))
+			fmt.Printf("%d check_kube-nodes nodes=%d %s\n", statusCode, len(nodes.Items), strings.Join(statusLine, "\n"))
 			os.Exit(statusCode)
 		}
 
-		fmt.Println("OK")
+		fmt.Printf("0 check_kube-nodes nodes=%d OK\n", len(nodes.Items))
 		os.Exit(nagiosStatusOK)
 	},
 }

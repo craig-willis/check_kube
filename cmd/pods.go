@@ -102,11 +102,11 @@ var podsCmd = &cobra.Command{
 		}
 
 		if statusCode != nagiosStatusOK {
-			fmt.Println(strings.Join(statusLine, "\n"))
+			fmt.Printf("%d check_kube-pods pods=%d %s\n", statusCode, len(pods.Items), strings.Join(statusLine, "\n"))
 			os.Exit(statusCode)
 		}
 
-		fmt.Println("OK")
+		fmt.Printf("0 check_kube-pods pods=%d OK\n", len(pods.Items))
 		os.Exit(nagiosStatusOK)
 	},
 }
